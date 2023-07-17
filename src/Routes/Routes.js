@@ -58,7 +58,8 @@ const router = createBrowserRouter([
         element: <DiseasePrediction></DiseasePrediction>,
       },
       {
-        path: "/review",
+        path: "/prediction",
+        element: <DiseasePrediction></DiseasePrediction>,
       },
       {
         path: "/order",

@@ -35,19 +35,15 @@ const DropFileInput = (props) => {
 
       reader.onload = (event) => {
         const fileContent = event.target.result
-        console.log("File", fileContent) // You can process or display the file content here
-
-        const keyValuePairs = fileContent.split("\n") // Split the content by newline character
+        console.log("File", fileContent) 
+        const keyValuePairs = fileContent.split("\n")
         const dataObject = {}
-
         keyValuePairs.forEach((pair) => {
           const [key, value] = pair.split(":")
           if (key && value) {
             dataObject[key.trim()] = value.trim()
           }
         })
-
-        console.log("Data Object", dataObject)
         setTextData(dataObject)
         setShowResults(true)
       }
@@ -106,18 +102,18 @@ const DropFileInput = (props) => {
 
   function filterByCategory(array, category) {
     return array.filter(function (item) {
-      return item.category === category
+      return item.productName == category
     })
   }
 
   useEffect(() => {
-    if (textData?.Category) {
-      const filteredItems = filterByCategory(products, textData?.Category)
+    if (textData?.productName) {
+      const filteredItems = filterByCategory(products, textData?.productName)
       setFilteredData(filteredItems)
     } else {
       setFilteredData([])
     }
-  }, [products, textData?.Category])
+  }, [products, textData?.productName])
 
   return (
     <>
@@ -182,7 +178,7 @@ const DropFileInput = (props) => {
         maximizable
       >
         <div>
-          {textData?.Category ? (
+          {textData?.productName ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
               {filteredData.map((product) => (
                 <div
