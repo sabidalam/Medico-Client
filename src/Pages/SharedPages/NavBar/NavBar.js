@@ -110,9 +110,9 @@ const NavBar = () => {
       <li className="font-semibold text-base">
         <Link to="/">Home</Link>
       </li>
-      {/* <li className="font-semibold text-base">
+      <li className="font-semibold text-base">
         <Link to="/otc-drugs">OTC Drugs</Link>
-      </li> */}
+      </li>
       <li className="font-semibold text-base">
         <Link to="/order-dashboard">Dashboard</Link>
       </li>
@@ -121,11 +121,11 @@ const NavBar = () => {
           <Link to="/add-medicine">Add Medicine</Link>
         </li>
       )}
-
-      <li className="font-semibold text-base">
-        <Link to="/prediction">Prediction</Link>
-      </li>
-
+      {role === "superAdmin" && (
+        <li className="font-semibold text-base">
+          <Link to="/all-medicine">All Medicine</Link>
+        </li>
+      )}
       {role === "superAdmin" && (
         <li className="font-semibold text-base">
           <Link to="/assign-role">Assign Role</Link>
@@ -245,12 +245,16 @@ const NavBar = () => {
         </div>
 
         <div className="navbar-end">
-          <div className="flex items-center text-lg text-gray-800">
-            <HiUserCircle className="mr-2 text-xl text-gray-500" />
-            <div>
-              {firstName} {lastName}
+          {role ?
+            <div className="flex items-center text-lg text-gray-800">
+              <HiUserCircle className="mr-2 text-xl text-gray-500" />
+              <div>
+                {firstName} {lastName}
+              </div>
             </div>
-          </div>
+            :
+            <></>
+          }
 
           <div className="flex-none ml-2">
             <div className="dropdown dropdown-end">
@@ -258,8 +262,6 @@ const NavBar = () => {
                 <div className="indicator">
                   <p>{totalCount}</p>
                   <FaCartPlus className="text-2xl" />
-
-                  <span className="badge badge-sm indicator-item"></span>
                 </div>
               </label>
               <div className="mt-3 card card-compact dropdown-content w-80 bg-base-100 shadow">

@@ -18,6 +18,7 @@ const AddMedicine = () => {
       companName: "",
       productType: "",
       weight: "",
+      isPrescribed: false,
     },
     // validationSchema: signUpSchema,
     onSubmit: (values, { resetForm }) => {
@@ -64,11 +65,11 @@ const AddMedicine = () => {
     setImage(e.target.files[0])
   }
   return (
-    <div className="mt-5">
+    <div className="my-10">
       <div>
-        <div className="flex w-full mt-2 max-w-sm mx-auto overflow-hidden white:bg-gray-800 shadow-xl lg:max-w-3xl m-3 boder-2">
-          <div className="w-full px-6 py-8 md:px-8 ">
-            <div className="font-bold text-2xl underline text-center justify-center">
+        <div className="flex w-full mt-2 max-w-sm mx-auto overflow-hidden bg-primary shadow-xl lg:max-w-3xl m-3 rounded">
+          <div className="w-full px-6 py-8 md:px-8">
+            <div className="font-bold text-2xl underline text-black text-center justify-center">
               Add Medicine
             </div>
 
@@ -76,10 +77,10 @@ const AddMedicine = () => {
               className="w-4/6 ml-auto mr-auto"
               onSubmit={formik.handleSubmit}
             >
-              <div className="mt-4 text-left ">
+              <div className="mt-4 text-left">
                 <label
-                  className="block mb-2 text-sm font-medium text-black dark:text-black"
-                  for="LoggingEmailAddress"
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="productName"
                 >
                   Product Name
                 </label>
@@ -91,28 +92,33 @@ const AddMedicine = () => {
                   onChange={formik.handleChange}
                   value={formik.values.productName}
                   required
-                  placeholder="Enter Product name"
+                  placeholder="Enter Product Name"
                 />
+                {formik.touched.productName && formik.errors.productName && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.productName}
+                  </div>
+                )}
               </div>
+
               <div className="mt-4 text-left">
                 <label
-                  for="category"
-                  className="block mb-2 text-sm font-medium text-black dark:text-black"
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="category"
                 >
                   Medicine Category
                 </label>
                 <select
                   id="category"
                   name="category"
-                  autocomplete="category"
+                  autoComplete="category"
                   onChange={formik.handleChange}
-                  class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  value={formik.values.category}
                 >
-                  <option value={formik.values.category}>
-                    Select Category
-                  </option>
+                  <option value="">Select Category</option>
                   <option value="Diabetic Care">Diabetic Care</option>
-                  <option value=" Supplies & Equipment">
+                  <option value="Supplies & Equipment">
                     Supplies & Equipment
                   </option>
                   <option value="Vitamins and Supplements">
@@ -129,12 +135,17 @@ const AddMedicine = () => {
                     Medical Supplies & Equipment
                   </option>
                 </select>
+                {formik.touched.category && formik.errors.category && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.category}
+                  </div>
+                )}
               </div>
 
               <div className="mt-4 text-left">
                 <label
-                  className="block mb-2 text-sm font-medium text-black dark:text-black"
-                  for="price"
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="price"
                 >
                   Price
                 </label>
@@ -148,12 +159,17 @@ const AddMedicine = () => {
                   required
                   placeholder="Enter Price"
                 />
+                {formik.touched.price && formik.errors.price && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.price}
+                  </div>
+                )}
               </div>
 
               <div className="mt-4 text-left">
                 <label
-                  className="block mb-2 text-sm font-medium text-black dark:text-black"
-                  for="companName"
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="companName"
                 >
                   Company Name
                 </label>
@@ -165,8 +181,13 @@ const AddMedicine = () => {
                   onChange={formik.handleChange}
                   value={formik.values.companName}
                   required
-                  placeholder="Enter company Name"
+                  placeholder="Enter Company Name"
                 />
+                {formik.touched.companName && formik.errors.companName && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.companName}
+                  </div>
+                )}
               </div>
               <div className="mt-4">
                 <div className="flex justify-between">
@@ -188,18 +209,13 @@ const AddMedicine = () => {
                   placeholder="file"
                 />
               </div>
-              {/* productName: "", price: "", category: "", file: null, companName:
-              "", productType: "", weight:"" */}
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <label
-                    className="block mb-2 text-sm font-medium text-black dark:text-black"
-                    for="productType"
-                  >
-                    Medicine Type
-                  </label>
-                </div>
-
+              <div className="mt-4 text-left">
+                <label
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="productType"
+                >
+                  Medicine Type
+                </label>
                 <input
                   id="productType"
                   className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
@@ -208,19 +224,22 @@ const AddMedicine = () => {
                   onChange={formik.handleChange}
                   value={formik.values.productType}
                   required
-                  placeholder="productType"
+                  placeholder="Enter Medicine Type"
                 />
+                {formik.touched.productType && formik.errors.productType && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.productType}
+                  </div>
+                )}
               </div>
-              <div className="mt-4">
-                <div className="flex justify-between">
-                  <label
-                    className="block mb-2 text-sm font-medium text-black dark:text-black"
-                    for="weight"
-                  >
-                    Weight
-                  </label>
-                </div>
 
+              <div className="mt-4 text-left">
+                <label
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="weight"
+                >
+                  Weight
+                </label>
                 <input
                   id="weight"
                   className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
@@ -229,18 +248,49 @@ const AddMedicine = () => {
                   onChange={formik.handleChange}
                   value={formik.values.weight}
                   required
-                  placeholder="weight"
+                  placeholder="Enter Weight"
                 />
+                {formik.touched.weight && formik.errors.weight && (
+                  <div className="text-red-500 text-sm mt-1">
+                    {formik.errors.weight}
+                  </div>
+                )}
               </div>
-              <div className="mt-2 ">
+
+              <div className="mt-4 text-left">
+                <label
+                  className="block mb-2 text-sm font-medium text-black"
+                  htmlFor="isPrescribed"
+                >
+                  Is Prescribed
+                </label>
+                <div className="flex items-center">
+                  <input
+                    id="isPrescribed"
+                    name="isPrescribed"
+                    type="checkbox"
+                    className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.isPrescribed}
+                  />
+                  <label
+                    className="ml-2 text-sm text-black"
+                    htmlFor="isPrescribed"
+                  >
+                    {formik.values.isPrescribed ? "Yes" : "No"}
+                  </label>
+                </div>
+              </div>
+
+              <div className="mt-2">
                 <CommonButton
-                  className="p-mr-2 p-button-raised p-button-secondary"
+                  className="mr-2 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
                   title="Save"
                   disabled={false}
                   label="Save"
                   type="submit"
                   icon="pi pi-save"
-                  color="p-button-raised p-button-success"
                   loading={loading}
                 />
               </div>
@@ -252,7 +302,9 @@ const AddMedicine = () => {
               <Link
                 to="/login"
                 className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline"
-              ></Link>
+              >
+                Back to Login
+              </Link>
 
               <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
             </div>

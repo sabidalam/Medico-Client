@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { clearCart } from "../../Components/Actions/Action"
+import PrimaryButton from "../../Components/PrimaryButton/PrimaryButton"
 
 const PlaceOrder = ({ items, onHide }) => {
   const cartItems = useSelector((state) => state.cartItems)
@@ -12,6 +13,7 @@ const PlaceOrder = ({ items, onHide }) => {
   const userID = localStorage.getItem("id")
   const { v4: uuidv4 } = require("uuid")
   const dispatch = useDispatch()
+  const [prescriptionFile, setPrescriptionFile] = useState(null)
 
   const groupedItems = cartItems.reduce((acc, item) => {
     const existingItem = acc.find(
@@ -34,33 +36,61 @@ const PlaceOrder = ({ items, onHide }) => {
     initialValues: {
       contactNumber: "",
       address: "",
+      prescription: null,
     },
     onSubmit: async (values) => {
-      const orderItems = groupedItems.map((item) => ({
-        ...item,
-        ...values,
-        firstName: firstName,
-        userID: userID,
-        _id: uuidv4(),
-        productID: item._id,
-        price: Number(item.price) * item.quantity,
-      }))
+      const apiKey = "f633b9b2b900fa4ce91d346d6b992734"
+      const url = "https://api.imgbb.com/1/upload"
+      const formData = new FormData()
+
+      formData.append("image", prescriptionFile)
+      formData.append("key", apiKey)
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+      let imageUrl = ""
+      if (prescriptionFile) {
+        const imgbbResponse = await axios.post(url, formData, config)
+        imageUrl = imgbbResponse.data.data.url
+      }
+      const orderItems = groupedItems.map((item) => {
+        const orderItem = {
+          ...item,
+          ...values,
+          firstName: firstName,
+          userID: userID,
+          // _id: uuidv4(),
+          productID: item._id,
+          price: Number(item.price) * item.quantity,
+        }
+
+        if (item.isPrescribed) {
+          if (!values.prescription) {
+            formik.setFieldError("prescription", "Prescription is required")
+            return
+          } else {
+            orderItem.prescription = imageUrl
+          }
+        }
+        return orderItem
+      })
+      if (orderItems.some((item) => !item)) {
+        return
+      }
 
       try {
-        // Example: Submit the form data to an API
         const response = await axios.post(
           "http://localhost:5000/order",
           orderItems
         )
-        console.log("Order placed successfully!", response.data)
-
-        // Clear the form inputs after successful submission
-        formik.resetForm()
-        onHide()
-        dispatch(clearCart())
-
-        // Navigate to a different page after successful submission
-        navigate("/order-dashboard")
+        console.log("Order placed successfully!", response)
+        window.location.replace(response?.data?.url)
+        // formik.resetForm()
+        // onHide()
+        // dispatch(clearCart())
+        // navigate("/order-dashboard")
       } catch (error) {
         console.error("Failed to place order!", error)
       }
@@ -91,7 +121,7 @@ const PlaceOrder = ({ items, onHide }) => {
   }
 
   return (
-    <div>
+    <div className="mb-10">
       <form onSubmit={formik.handleSubmit} className="mb-4">
         {/* Contact Number Field */}
         <div className="mb-4">
@@ -119,13 +149,32 @@ const PlaceOrder = ({ items, onHide }) => {
           <textarea
             id="address"
             className="p-2 border border-gray-300 rounded-md w-full resize-none focus:outline-none focus:border-primary"
-            rows={4}
+            rows={2}
             placeholder="Enter address"
             value={formik.values.address}
             onChange={handleAddressChange}
           ></textarea>
           {formik.touched.address && formik.errors.address && (
             <div className="text-red-500">{formik.errors.address}</div>
+          )}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="prescription" className="block mb-1 font-semibold">
+            Upload Prescription:
+          </label>
+          <input
+            type="file"
+            id="prescription"
+            className="p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-primary"
+            onChange={(event) => {
+              formik.setFieldValue("prescription", event.currentTarget.files[0])
+              setPrescriptionFile(event.currentTarget.files[0])
+            }}
+          />
+          {formik.touched.prescription && formik.errors.prescription && (
+            <div className="text-red-500 mt-1">
+              {formik.errors.prescription}
+            </div>
           )}
         </div>
 
@@ -178,13 +227,12 @@ const PlaceOrder = ({ items, onHide }) => {
             </tbody>
           </table>
         </div>
-
-        <button
-          type="submit"
-          className="inline-block px-4 py-2 text-white bg-primary hover:bg-primary-hover rounded-md transition-colors duration-300 float-right"
+        <PrimaryButton
+          type={`submit`}
+          classes={`h-10 mt-3 btn-sm normal-case hover:scale-105 duration-500 float-right`}
         >
           Place Order
-        </button>
+        </PrimaryButton>
       </form>
     </div>
   )

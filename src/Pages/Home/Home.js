@@ -5,7 +5,6 @@ import DentalHome from "./DentalHome/DentalHome"
 import DiabeticHome from "./DiabeticHome/DiabeticHome"
 import OtcDrugHome from "./OtcDrugHome/OtcDrugHome"
 import PersonalCareHome from "./PersonalCareHome/PersonalCareHome"
-import PrescriptionMedicinesHome from "./PrescriptionMedicinesHome/PrescriptionMedicinesHome"
 import Services from "./Services/Services"
 import ShopByCategory from "./ShopByCategory/ShopByCategory"
 import SuppliesHome from "./SuppliesHome/SuppliesHome"
@@ -19,7 +18,6 @@ const Home = () => {
       <Banner />
       <Services />
       <ShopByCategory />
-      {/* <PrescriptionMedicinesHome /> */}
       <OtcDrugHome />
       <DiabeticHome />
       <VitaminsHome />

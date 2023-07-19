@@ -25,7 +25,7 @@ const Login = () => {
         localStorage.setItem("id", id)
         localStorage.setItem("role", role)
         localStorage.setItem("token", token)
-                navigate("/")
+        navigate("/")
 
 
         // Display success message or perform further actions
@@ -58,8 +58,8 @@ const Login = () => {
   })
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-96 bg-white p-8 rounded-lg border border-gray-300 shadow-md">
+    <div className="flex justify-center items-center h-screen bg-primary">
+      <div className="w-96 bg-gradient-to-r from-primary to-secondary p-8 rounded-lg border border-gray-300 shadow-md">
         <h2 className="text-2xl mb-4">Login</h2>
         {formik.status === "error" && (
           <div className="text-red-500 mb-4">

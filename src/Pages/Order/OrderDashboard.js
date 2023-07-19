@@ -93,87 +93,121 @@ const OrderDashboard = () => {
       <h2 className="text-2xl font-semibold mb-4 text-center mt-4">
         Order Dashboard Page
       </h2>
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr>
-            <th className="py-2 px-4 bg-gray-300 border-b">Order ID</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Product Name</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Quantity</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">User Name</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Price</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Address</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Contact Number</th>
-            <th className="py-2 px-4 bg-gray-300 border-b">Status</th>
-            {role === "superAdmin" && (
-              <th className="py-2 px-4 bg-gray-300 border-b">Action</th>
-            )}
-          </tr>
-        </thead>
-
-        <tbody>
-          {currentItems.length === 0 ? (
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
             <tr>
-              <td colSpan={9} className="py-4 text-center">
-                No Data Found!
-              </td>
+              <th className="py-2 px-4 bg-gray-300 border-b">Order ID</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Product Name</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Quantity</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">User Name</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Price</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Prescription</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Address</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Contact Number</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Payment</th>
+              <th className="py-2 px-4 bg-gray-300 border-b">Status</th>
+              {role === "superAdmin" && (
+                <th className="py-2 px-4 bg-gray-300 border-b">Action</th>
+              )}
             </tr>
-          ) : (
-            currentItems.map((order) => (
-              <tr key={order._id} className={getRowClassName(order.status)}>
-                <td className="py-2 px-4 border-b text-center">{order._id}</td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.productName}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.quantity}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.firstName}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  ${order.price}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.address}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.contactNumber}
-                </td>
-                <td className="py-2 px-4 border-b text-center">
-                  {order.status}
-                </td>
-                {role === "superAdmin" && (
-                  <td className="py-2 px-4 border-b">
-                    <div className="flex items-center">
-                      <select
-                        className="p-2 mr-2 bg-gray-100 border rounded"
-                        value={selectedAction[order._id] || "Pending"}
-                        onChange={(e) =>
-                          handleActionSelect(order._id, e.target.value)
-                        }
-                      >
-                        <option value="Pending">Pending</option>
-                        {ActionOptions.map((action) => (
-                          <option key={action} value={action}>
-                            {action}
-                          </option>
-                        ))}
-                      </select>
+          </thead>
 
-                      <button
-                        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                        onClick={() => executeAction(order._id)}
-                      >
-                        Execute
-                      </button>
-                    </div>
-                  </td>
-                )}
+          <tbody>
+            {currentItems.length === 0 ? (
+              <tr>
+                <td colSpan={9} className="py-4 text-center">
+                  No Data Found!
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              currentItems.map((order) => (
+                <tr key={order._id} className={getRowClassName(order.status)}>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order._id}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.productName}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.quantity}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.firstName}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    ${order.price}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.prescription && (
+                      <a
+                        href={order.prescription}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={order.prescription}
+                          alt="Prescription"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      </a>
+                    )}
+                  </td>
+
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.address}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.contactNumber}
+                  </td>
+                  <td
+                    className="py-2 px-4 border-b text-center"
+                    style={{
+                      backgroundColor: order.paidStatus ? "#E2F2DF" : "#FED7D7",
+                    }}
+                  >
+                    {order.paidStatus ? "Paid" : "Not paid"}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {order.status}
+                  </td>
+                  {role === "superAdmin" && (
+                    <td className="py-2 px-4 border-b">
+                      <div className="flex items-center">
+                        <select
+                          className="p-2 mr-2 bg-gray-100 border rounded"
+                          value={selectedAction[order._id] || "Pending"}
+                          onChange={(e) =>
+                            handleActionSelect(order._id, e.target.value)
+                          }
+                        >
+                          <option value="Pending">Pending</option>
+                          {ActionOptions.map((action) => (
+                            <option key={action} value={action}>
+                              {action}
+                            </option>
+                          ))}
+                        </select>
+
+                        <button
+                          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                          onClick={() => executeAction(order._id)}
+                        >
+                          Execute
+                        </button>
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
       <div className="mt-4 flex justify-center mb-5">
         <button

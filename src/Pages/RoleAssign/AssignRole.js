@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
+import PrimaryButton from "../../Components/PrimaryButton/PrimaryButton"
 
 const AssignRole = () => {
   const [userId, setUserId] = useState("")
@@ -32,8 +33,8 @@ const AssignRole = () => {
   }
 
   return (
-    <div className="container mx-auto mt-10">
-      <h2 className="text-2xl font-semibold mb-4">Assign Role</h2>
+    <div className="container mx-auto my-10">
+      <h2 className="text-4xl font-semibold mb-3 text-center">Assign Role</h2>
       <form
         onSubmit={handleSubmit}
         className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6"
@@ -65,12 +66,12 @@ const AssignRole = () => {
             <option value="user">User</option>
           </select>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        <PrimaryButton
+          type={`submit`}
+          classes={`h-12 btn-sm normal-case hover:scale-105 duration-500`}
         >
           Assign Role
-        </button>
+        </PrimaryButton>
       </form>
     </div>
   )

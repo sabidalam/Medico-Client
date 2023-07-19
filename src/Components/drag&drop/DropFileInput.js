@@ -35,15 +35,19 @@ const DropFileInput = (props) => {
 
       reader.onload = (event) => {
         const fileContent = event.target.result
-        console.log("File", fileContent) 
-        const keyValuePairs = fileContent.split("\n")
+        console.log("File", fileContent) // You can process or display the file content here
+
+        const keyValuePairs = fileContent.split("\n") // Split the content by newline character
         const dataObject = {}
+
         keyValuePairs.forEach((pair) => {
           const [key, value] = pair.split(":")
           if (key && value) {
             dataObject[key.trim()] = value.trim()
           }
         })
+
+        console.log("Data Object", dataObject)
         setTextData(dataObject)
         setShowResults(true)
       }
@@ -102,18 +106,18 @@ const DropFileInput = (props) => {
 
   function filterByCategory(array, category) {
     return array.filter(function (item) {
-      return item.productName == category
+      return item.category === category
     })
   }
 
   useEffect(() => {
-    if (textData?.productName) {
-      const filteredItems = filterByCategory(products, textData?.productName)
+    if (textData?.Category) {
+      const filteredItems = filterByCategory(products, textData?.Category)
       setFilteredData(filteredItems)
     } else {
       setFilteredData([])
     }
-  }, [products, textData?.productName])
+  }, [products, textData?.Category])
 
   return (
     <>
@@ -130,8 +134,8 @@ const DropFileInput = (props) => {
               <GoCloudUpload />
             </span>
             <p className="text-xl font-semibold">
-              Drag & Drop your Prescription here <br /> Or <br /> Click to
-              Upload Text File{" "}
+              Drag & Drop <br /> Or <br /> Click to
+              Upload Text File{" "} to Search Your Prescribe Medicine
             </p>
           </div>
           <input type="file" accept=".txt" onChange={onFileDrop} />
@@ -178,7 +182,7 @@ const DropFileInput = (props) => {
         maximizable
       >
         <div>
-          {textData?.productName ? (
+          {textData?.Category ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
               {filteredData.map((product) => (
                 <div

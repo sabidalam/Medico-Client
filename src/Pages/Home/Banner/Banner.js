@@ -39,7 +39,7 @@ const Banner = () => {
                         </div>
                         <div className="absolute transform -translate-y-1/2 left-204 top-2/3">
                             <h1 className='text-5xl font-bold mb-12'>We are always ready to<br />
-                                Delivery your Emergency<br />
+                                Deliver your Emergency<br />
                                 Medicine</h1>
                         </div>
                     </SwiperSlide>

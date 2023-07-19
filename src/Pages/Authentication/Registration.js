@@ -41,8 +41,8 @@ const Registration = () => {
   })
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-96 bg-white p-8 rounded-lg border border-gray-300 shadow-md">
+    <div className="flex justify-center items-center h-screen bg-primary">
+      <div className="w-96 bg-gradient-to-r from-primary to-secondary p-8 rounded-lg border border-gray-300 shadow-md">
         <h2 className="text-2xl mb-4">Registration</h2>
         {registrationSuccess && (
           <div className="bg-green-200 text-green-800 py-2 px-4 mb-4 rounded-md">
@@ -121,7 +121,7 @@ const Registration = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md"
           >
             Register
           </button>
