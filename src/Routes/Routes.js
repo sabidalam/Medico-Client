@@ -8,7 +8,6 @@ import AddMedicine from "../Pages/Medicine/AddMedicine"
 import OtcDrugs from "../Pages/OtcDrugs/OtcDrugs"
 import ProductDetails from "../Pages/ProductDetails/ProductDetails"
 import ViewAddToCartProduct from "../Pages/ProductDetails/ViewAddToCartProduct"
-import DiseasePrediction from "../Pages/Medicine/DiseasePrediction"
 import Login from "../Pages/Authentication/Login"
 import Registration from "../Pages/Authentication/Registration"
 import PlaceOrder from "../Pages/Order/PlaceOrder"
@@ -17,6 +16,15 @@ import AssignRole from "../Pages/RoleAssign/AssignRole"
 import AllMedicine from "../Pages/Medicine/AllMedicine"
 import EditMedicine from "../Pages/Medicine/EditMedicine"
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess"
+import img from "../assets/404error.jpg"
+import DiabeticCare from "../Pages/AllCategoryProducts/DiabeticCare/DiabeticCare"
+import BabyCare from "../Pages/AllCategoryProducts/BabyCare/BabyCare"
+import Supplies from "../Pages/AllCategoryProducts/Supplies/Supplies"
+import Surgical from "../Pages/AllCategoryProducts/Surgical/Surgical"
+import Vitamins from "../Pages/AllCategoryProducts/Vitamins/Vitamins"
+import WomenCare from "../Pages/AllCategoryProducts/WomenCare/WomenCare"
+import PersonalCare from "../Pages/AllCategoryProducts/PersonalCare/PersonalCare"
+import DentalCare from "../Pages/AllCategoryProducts/DentalCare/DentalCare"
 
 const router = createBrowserRouter([
   {
@@ -48,7 +56,7 @@ const router = createBrowserRouter([
         element: <OrderDashboard></OrderDashboard>,
       },
       {
-        path: `/payment/sucess/:tranId`,
+        path: "/payment/sucess/:tranId",
         element: <PaymentSuccess></PaymentSuccess>,
       },
       {
@@ -61,16 +69,44 @@ const router = createBrowserRouter([
         element: <OtcDrugs></OtcDrugs>,
       },
       {
+        path: "/diabetic-care",
+        element: <DiabeticCare></DiabeticCare>,
+      },
+      {
+        path: "/baby-care",
+        element: <BabyCare></BabyCare>,
+      },
+      {
+        path: "/supplies",
+        element: <Supplies></Supplies>,
+      },
+      {
+        path: "/surgical",
+        element: <Surgical></Surgical>,
+      },
+      {
+        path: "/vitamins",
+        element: <Vitamins></Vitamins>,
+      },
+      {
+        path: "/women-care",
+        element: <WomenCare></WomenCare>,
+      },
+      {
+        path: "/personal-care",
+        element: <PersonalCare></PersonalCare>,
+      },
+      {
+        path: "/dental-care",
+        element: <DentalCare></DentalCare>,
+      },
+      {
         path: "/add-medicine",
         element: <AddMedicine></AddMedicine>,
       },
       {
         path: "/edit-medicine/:id",
         element: <EditMedicine></EditMedicine>,
-      },
-      {
-        path: "/disease-prediction",
-        element: <DiseasePrediction></DiseasePrediction>,
       },
       {
         path: "/order",
@@ -100,6 +136,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '*',
+    element:
+      <div className="text-center">
+        <img src={img} alt="" className="w-1/2 mx-auto" />
+        <h3 className='text-3xl'>The route you are searching is not available!!!</h3>
+        <h3 className='text-3xl'>Please try for a valid route!!!</h3>
+      </div>
+  }
 ])
 
 export default router

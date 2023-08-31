@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
     weight,
     _id,
   } = product
-  console.log("Product test jony..", product)
+  console.log("Product test", product)
   return (
     <div className={`shadow-md py-2 rounded-lg hover:scale-105 duration-500`}>
       <img src={image} alt="" className="w-40 h-36 mx-auto rounded-lg" />

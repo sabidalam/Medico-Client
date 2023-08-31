@@ -29,26 +29,29 @@ const DropFileInput = (props) => {
     if (newFile) {
       const updatedList = [...fileList, newFile]
       setFileList(updatedList)
-      props.onFileChange(updatedList)
 
       const reader = new FileReader()
 
       reader.onload = (event) => {
         const fileContent = event.target.result
-        console.log("File", fileContent) // You can process or display the file content here
 
-        const keyValuePairs = fileContent.split("\n") // Split the content by newline character
-        const dataObject = {}
+        const keyValuePairs = fileContent.split("\n")
+        const dataArray = []
 
         keyValuePairs.forEach((pair) => {
           const [key, value] = pair.split(":")
           if (key && value) {
-            dataObject[key.trim()] = value.trim()
+            const trimmedKey = key.trim()
+            const values = value.split(",").map((item) => item.trim())
+            values.forEach((val) => {
+              const obj = { [trimmedKey]: val }
+              dataArray.push(obj)
+            })
           }
         })
 
-        console.log("Data Object", dataObject)
-        setTextData(dataObject)
+        setTextData(dataArray)
+        console.log("dataArray", dataArray)
         setShowResults(true)
       }
 
@@ -104,20 +107,22 @@ const DropFileInput = (props) => {
     ProductData()
   }, [])
 
-  function filterByCategory(array, category) {
+  function filterByCategory(array, productNameArray) {
     return array.filter(function (item) {
-      return item.category === category
+      return productNameArray.includes(item.productName)
     })
   }
 
+  // Your existing code with the useEffect hook
   useEffect(() => {
-    if (textData?.Category) {
-      const filteredItems = filterByCategory(products, textData?.Category)
+    if (textData?.length > 0) {
+      const productNames = textData.map((item) => item.productName)
+      const filteredItems = filterByCategory(products, productNames)
       setFilteredData(filteredItems)
     } else {
       setFilteredData([])
     }
-  }, [products, textData?.Category])
+  }, [products, textData])
 
   return (
     <>
@@ -135,15 +140,22 @@ const DropFileInput = (props) => {
             </span>
             <p className="text-xl font-semibold">
               Drag & Drop <br /> Or <br /> Click to
-              Upload Text File{" "} to Search Your Prescribe Medicine
+              Upload a Text File{" "} to Search for Multiple Medicines
             </p>
           </div>
           <input type="file" accept=".txt" onChange={onFileDrop} />
         </div>
-
+        <div className="text-center mb-2">
+          <a href='https://drive.google.com/file/d/1lhg21NGpSM1ghh47qmhsbB1OLgDj7FG-/view?usp=sharing'
+            smooth={true}
+            target='_blank'
+            rel="noreferrer"
+            className="w-fit px-6 py-3 my-2 btn btn-primary normal-case bg-gradient-to-r from-primary to-secondary cursor-pointer hover:scale-105 duration-500">
+            View Instruction for File Format
+          </a>
+        </div>
         {fileList.length > 0 ? (
           <div className="">
-            <p className="text-lg text-center">File is ready to upload</p>
             {fileList.map((item, index) => (
               <div key={index} className="drop-file-preview__item">
                 <img
@@ -173,8 +185,7 @@ const DropFileInput = (props) => {
       </div>
       <Dialog
         className="text-l"
-        blockScroll
-        header="Predicted Medicine"
+        header="Prescribe Medicine"
         visible={showResults}
         style={{ width: "80vw" }}
         onHide={() => onHide("displayBasic")}
@@ -182,7 +193,7 @@ const DropFileInput = (props) => {
         maximizable
       >
         <div>
-          {textData?.Category ? (
+          {textData?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
               {filteredData.map((product) => (
                 <div
@@ -248,4 +259,4 @@ DropFileInput.propTypes = {
   onFileChange: PropTypes.func.isRequired,
 }
 
-export default DropFileInput
+export default DropFileInput;

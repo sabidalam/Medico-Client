@@ -2,6 +2,7 @@ import React from "react"
 import { useFormik } from "formik"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-hot-toast"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ const Login = () => {
         localStorage.setItem("id", id)
         localStorage.setItem("role", role)
         localStorage.setItem("token", token)
+        toast.success("Login Successful!")
         navigate("/")
 
 

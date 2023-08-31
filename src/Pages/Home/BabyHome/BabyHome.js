@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { FaCartPlus } from "react-icons/fa"
-import { TbCurrencyTaka } from "react-icons/tb"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../../Components/PrimaryButton/PrimaryButton"
-import image1 from "../../../assets/babyCare/Lactogen 1.webp"
-import image2 from "../../../assets/babyCare/bashundhara-baby-wipes-sky-blue-120-pcs.jpeg"
-import image3 from "../../../assets/babyCare/Eldomilk-1-growing-up-milk-powder.webp"
-import image4 from "../../../assets/babyCare/Johnson & Johnson Baby Lotion - 500ml.jpeg"
-import image5 from "../../../assets/babyCare/Pampers-Baby-Diaper-Pant.png"
 import ProductCard from "../../../Components/PoductCard/ProductCard"
 import axios from "axios"
+import Loader from "../../../Components/Loader/Loader"
 
 const BabyHome = () => {
   const [loading, setLoading] = useState(false)
@@ -23,7 +17,6 @@ const BabyHome = () => {
         .then(function (res) {
           setLoading(false)
           setProducts(res?.data)
-
           console.log(res?.data)
         })
         .catch(function (error) {
@@ -47,13 +40,19 @@ const BabyHome = () => {
       <h3 className="text-4xl font-bold text-center lg:text-left mb-3">
         Baby & Mom Care
       </h3>
-      <div className="w-full grid grid-cols-2 lg:grid-cols-5 gap-6 py-8 px-12 sm:px-0 cursor-pointer">
-        {filteredItems.map((product) => (
-          <ProductCard key={product.id} product={product}></ProductCard>
-        ))}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 py-8 px-12 sm:px-0 cursor-pointer">
+        {
+          loading ?
+            <Loader>
+            </Loader>
+            :
+            filteredItems.slice(-5).map((product) => (
+              <ProductCard key={product.id} product={product}></ProductCard>
+            ))
+        }
       </div>
       <div className="text-center md:absolute top-0 right-0">
-        <Link to="/diabetic-care">
+        <Link to="/baby-care">
           <PrimaryButton
             classes={`btn-sm normal-case hover:scale-105 duration-500`}
           >

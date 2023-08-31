@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-hot-toast"
 
 const Registration = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -31,6 +32,7 @@ const Registration = () => {
         )
         console.log("Registration success:", response.data)
         setRegistrationSuccess(true)
+        toast.success("Registration Successful!")
         navigate("/login")
         // Perform any additional actions or show success message to the user
       } catch (error) {

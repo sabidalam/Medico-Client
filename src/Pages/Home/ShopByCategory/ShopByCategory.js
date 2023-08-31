@@ -22,52 +22,62 @@ const ShopByCategory = () => {
         {
             id: 1,
             title: 'Diabetic Care',
-            img: image1
+            img: image1,
+            to: '/diabetic-care'
         },
         {
             id: 2,
             title: 'Supplies & Equipment',
-            img: image2
+            img: image2,
+            to: '/supplies'
         },
         {
             id: 3,
             title: 'Vitamins & Supplements',
-            img: image3
+            img: image3,
+            to: '/vitamins'
         },
         {
             id: 4,
             title: 'Personal Care',
-            img: image4
+            img: image4,
+            to: '/personal-care'
         },
         {
             id: 5,
             title: 'Women Care',
-            img: image5
+            img: image5,
+            to: '/women-care'
         },
         {
             id: 6,
             title: 'Herbal Product',
-            img: image6
+            img: image6,
+            to: '/herbal'
         },
         {
             id: 7,
             title: 'Sexual Wellbeing',
-            img: image7
+            img: image7,
+            to: '/sexual-wellbeing'
         },
         {
             id: 8,
             title: 'Baby & Mom Care',
-            img: image8
+            img: image8,
+            to: '/baby-care'
         },
         {
             id: 9,
             title: 'Surgical Products',
-            img: image9
+            img: image9,
+            to: '/surgical'
         },
         {
             id: 10,
             title: 'Dental & Oral Care',
-            img: image10
+            img: image10,
+            to: '/dental-care'
         },
 
     ]
@@ -75,8 +85,8 @@ const ShopByCategory = () => {
         <div className='max-w-6xl mx-auto my-7'>
             <h3 className='text-4xl font-bold text-center mb-3'>Shop By Category</h3>
             <div className="w-full grid grid-cols-2 lg:grid-cols-5 gap-8 text-center py-8 px-12 sm:px-0 cursor-pointer">
-                {categories.map(({ id, img, title, }) => (
-                    <Link to={``}>
+                {categories.map(({ id, img, title, to }) => (
+                    <Link to={to}>
                         <div
                             key={id}
                             className={`shadow-md hover:scale-105 duration-500 h py-2 rounded-lg shadow-primary`} data-aos='zoom-in'>

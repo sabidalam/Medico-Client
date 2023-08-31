@@ -12,7 +12,8 @@ export const incrementCount = () => {
     type: INCREMENT_COUNT,
   }
 }
-export const clearCart = () => ({
+export const clearCart = (productName) => ({
   type: CLEAR_CART,
+  payload: productName,
 })
 

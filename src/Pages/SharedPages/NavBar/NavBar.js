@@ -4,9 +4,7 @@ import logo from "../../../assets/logo.png"
 import { FaSearch, FaCartPlus } from "react-icons/fa"
 import { RiArrowDownSLine } from "react-icons/ri"
 import PrimaryButton from "../../../Components/PrimaryButton/PrimaryButton"
-import { useCart } from "react-use-cart"
 import axios from "axios"
-import ReactModal from "react-modal"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Dialog } from "primereact/dialog"
@@ -41,8 +39,8 @@ const NavBar = () => {
       await axios
         .get(`http://localhost:5000/medisin`)
         .then(function (res) {
-          setLoading(false)
           setProducts(res?.data)
+          setLoading(false)
 
           console.log(res?.data)
         })
@@ -91,6 +89,11 @@ const NavBar = () => {
     (sum, item) => sum + Number(item.price) * item.quantity,
     0
   )
+  // Function to remove a specific item from the cart
+  const handleRemoveCartItem = (productName) => {
+    dispatch(clearCart(productName));
+  };
+
   const storedId = localStorage.getItem("id")
 
   const handlePlaceOrder = () => {
@@ -143,57 +146,52 @@ const NavBar = () => {
   const dropDownList = (
     <>
       <li>
-        <Link to="/" className="hover:bg-primary">
-          Medicines
-        </Link>
-      </li>
-      <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/diabetic-care" className="hover:bg-primary">
           Diabetic Care
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/supplies" className="hover:bg-primary">
           Supplies & Equipment
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/vitamins" className="hover:bg-primary">
           Vitamins & Supplements
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/dental-care" className="hover:bg-primary">
           Dental & Oral Care
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/herbal" className="hover:bg-primary">
           Herbal Product
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/sexual-wellbeing" className="hover:bg-primary">
           Sexual Wellbeing
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/personal-care" className="hover:bg-primary">
           Personal Care
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/baby-care" className="hover:bg-primary">
           Baby & Mom Care
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/women-care" className="hover:bg-primary">
           Women's Care
         </Link>
       </li>
       <li>
-        <Link to="/" className="hover:bg-primary">
+        <Link to="/surgical" className="hover:bg-primary">
           Surgical Products
         </Link>
       </li>
@@ -221,7 +219,7 @@ const NavBar = () => {
     <div className="sticky top-0 z-30 w-full bg-white">
       <div className="navbar lg:px-8 py-3 ">
         <div className="navbar-start">
-          <Link className="normal-case px-2 flex items-center">
+          <Link to='/' className="normal-case px-2 flex items-center">
             <img src={logo} alt="" style={{ height: "30px" }} />
             <span className="font-bold text-4xl ml-2 mt-1">Medico</span>
           </Link>
@@ -246,17 +244,17 @@ const NavBar = () => {
 
         <div className="navbar-end">
           {role ?
-            <div className="flex items-center text-lg text-gray-800">
-              <HiUserCircle className="mr-2 text-xl text-gray-500" />
+            <div className="flex items-center text-xs lg:text-lg text-gray-800">
+              <HiUserCircle size={20} className="mr-1 text-xl text-gray-500" />
               <div>
-                {firstName} {lastName}
+                {lastName}
               </div>
             </div>
             :
             <></>
           }
 
-          <div className="flex-none ml-2">
+          <div className="flex-none lg:ml-2">
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle">
                 <div className="indicator">
@@ -264,26 +262,33 @@ const NavBar = () => {
                   <FaCartPlus className="text-2xl" />
                 </div>
               </label>
-              <div className="mt-3 card card-compact dropdown-content w-80 bg-base-100 shadow">
+              <div className="mt-3 card card-compact dropdown-content z-[1] bg-base-100 shadow w-64 lg:w-96">
                 {groupedItems.map((item) => (
                   <div
                     key={item.id}
                     className="flex items-center justify-between p-2 border-b border-base-300"
                   >
                     <div>
-                      <p className="text-lg font-medium">{item.productName}</p>
+                      <p className="text-lg font-medium w-40">{item.productName}</p>
                       <p className="text-sm text-base-content-opacity">
                         Quantity: {item.quantity}
                       </p>
                     </div>
                     <p className="text-lg font-medium">
-                      Price: ${Number(item.price) * item.quantity}
+                      Price: ৳{Number(item.price) * item.quantity}
                     </p>
+                    <div>
+                      <button
+                        className="px-2 text-white bg-primary hover:bg-primary-hover focus:outline-none rounded-md transition-colors duration-300"
+                        onClick={() => handleRemoveCartItem(item.productName)}>
+                        X
+                      </button>
+                    </div>
                   </div>
                 ))}
                 <div className="flex justify-between p-2 bg-base-200">
                   <p className="text-lg font-medium">
-                    Total Price Sum: ${totalPriceSum}
+                    Total Price Sum: ৳{totalPriceSum}
                   </p>
                   <button
                     className="px-4 py-2 text-white bg-primary hover:bg-primary-hover focus:outline-none rounded-md transition-colors duration-300"
@@ -297,13 +302,13 @@ const NavBar = () => {
           </div>
           {!userID ? (
             <div>
-              <Link to="/login" className="ml-3">
-                <PrimaryButton classes={`btn-sm normal-case`}>
+              <Link to="/login" className="m-0 lg:ml-3">
+                <PrimaryButton classes={`btn-xs lg:btn-sm normal-case`}>
                   Login
                 </PrimaryButton>
               </Link>
-              <Link to="/register" className="ml-3">
-                <PrimaryButton classes={`btn-sm normal-case`}>
+              <Link to="/register" className="ml-2 lg:ml-3">
+                <PrimaryButton classes={`btn-xs lg:btn-sm normal-case`}>
                   Register
                 </PrimaryButton>
               </Link>
@@ -366,8 +371,10 @@ const NavBar = () => {
               type="text"
               placeholder="Search Medicine"
               className="input input-bordered w-full"
+              value={searchTerm}
+              onChange={handleChange}
             />
-            <button className="btn btn-primary absolute top-0 right-0 rounded-l-none">
+            <button onClick={handleSearch} className="btn btn-primary absolute top-0 right-0 rounded-l-none">
               <FaSearch />
             </button>
           </div>
@@ -395,8 +402,7 @@ const NavBar = () => {
         {/* Result Modal */}
         <Dialog
           className="text-l"
-          blockScroll
-          header="Predicted Medicine"
+          header="Search Results"
           visible={showResults}
           style={{ width: "80vw" }}
           onHide={() => onHide("displayBasic")}
@@ -404,7 +410,6 @@ const NavBar = () => {
           maximizable
         >
           <div>
-            <h2 className="text-2xl font-bold mb-4">Search Results</h2>
             {searchResults.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {searchResults.map((product) => (
@@ -461,7 +466,6 @@ const NavBar = () => {
         </Dialog>
         <Dialog
           className="text-l"
-          blockScroll
           header="Place order"
           visible={showModal}
           style={{ width: "80vw" }}

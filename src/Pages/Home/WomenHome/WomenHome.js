@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../../Components/PrimaryButton/PrimaryButton"
-import image1 from "../../../assets/womenCare/Freedom Hygeine.jpeg"
-import image2 from "../../../assets/womenCare/joya-regular-wings-8-pads.webp"
-import image3 from "../../../assets/womenCare/minicon.png"
-import image4 from "../../../assets/womenCare/noret.png"
-import image5 from "../../../assets/womenCare/Vwash Plus Hygiene Wash.jpg"
 import ProductCard from "../../../Components/PoductCard/ProductCard"
 import axios from "axios"
+import Loader from "../../../Components/Loader/Loader"
 
 const WomenHome = () => {
   const [loading, setLoading] = useState(false)
@@ -45,13 +41,19 @@ const WomenHome = () => {
       <h3 className="text-4xl font-bold text-center lg:text-left mb-3">
         Women's Care
       </h3>
-      <div className="w-full grid grid-cols-2 lg:grid-cols-5 gap-6 py-8 px-12 sm:px-0 cursor-pointer">
-        {filteredItems.map((product) => (
-          <ProductCard key={product.id} product={product}></ProductCard>
-        ))}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 py-8 px-12 sm:px-0 cursor-pointer">
+        {
+          loading ?
+            <Loader>
+            </Loader>
+            :
+            filteredItems.map((product) => (
+              <ProductCard key={product.id} product={product}></ProductCard>
+            ))
+        }
       </div>
       <div className="text-center md:absolute top-0 right-0">
-        <Link to="/diabetic-care">
+        <Link to="/women-care">
           <PrimaryButton
             classes={`btn-sm normal-case hover:scale-105 duration-500`}
           >

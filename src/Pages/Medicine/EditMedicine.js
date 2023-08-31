@@ -2,7 +2,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { CommonButton } from "../../Components/Button/Button";
 
 const EditMedicine = () => {
@@ -82,7 +82,7 @@ const EditMedicine = () => {
         updatedData
       );
 
-      toast.success("Medicine updated successfully");
+      toast.success("Medicine Updated Successfully");
       navigate("/all-medicine");
     } catch (error) {
       console.log(error);
@@ -282,7 +282,7 @@ const EditMedicine = () => {
                     checked={formik.values.isPrescribed}
                   />
                   <label
-                    className="ml-2 text-sm text-gray-700 dark:text-gray-400"
+                    className="ml-2 text-sm text-white dark:text-white"
                     htmlFor="isPrescribed"
                   >
                     {formik.values.isPrescribed ? "Yes" : "No"}

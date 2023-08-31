@@ -2,7 +2,7 @@ import axios from "axios"
 import { useFormik } from "formik"
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
+import { toast } from "react-hot-toast";
 import { CommonButton } from "../../Components/Button/Button"
 
 const AddMedicine = () => {
@@ -51,11 +51,10 @@ const AddMedicine = () => {
       }
       const anotherApiResponse = await axios.post(
         "http://localhost:5000/medisin",
-        // "https://prime-automation-server-production.up.railway.app/product",
         allData
       )
       console.log(anotherApiResponse)
-      toast.success("Medicine Added successfully")
+      toast.success("Medicine Added successfully");
       navigate("/")
     } catch (error) {
       setLoading(false)
@@ -67,7 +66,7 @@ const AddMedicine = () => {
   return (
     <div className="my-10">
       <div>
-        <div className="flex w-full mt-2 max-w-sm mx-auto overflow-hidden bg-primary shadow-xl lg:max-w-3xl m-3 rounded">
+        <div className="flex w-full mt-2 max-w-sm mx-auto overflow-hidden bg-primary shadow-md lg:max-w-3xl m-3 rounded">
           <div className="w-full px-6 py-8 md:px-8">
             <div className="font-bold text-2xl underline text-black text-center justify-center">
               Add Medicine

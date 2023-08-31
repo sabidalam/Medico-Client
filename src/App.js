@@ -6,7 +6,7 @@ import "primereact/resources/primereact.min.css"
 import "primeicons/primeicons.css"
 import { RouterProvider } from "react-router-dom"
 import router from "./Routes/Routes"
-import { ToastContainer } from "react-toastify"
+import { Toaster } from 'react-hot-toast';
 import { CartProvider } from "react-use-cart"
 
 function App() {
@@ -14,21 +14,8 @@ function App() {
     <div className="">
       <CartProvider>
         <RouterProvider router={router}>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-
-          <ToastContainer />
         </RouterProvider>
+        <Toaster />
       </CartProvider>
     </div>
   )

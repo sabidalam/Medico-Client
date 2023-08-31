@@ -25,7 +25,7 @@ const OrderDashboard = () => {
   useEffect(() => {
     fetchOrders()
   }, [])
-
+  console.log(orders);
   const totalItems = orders.length
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
@@ -146,12 +146,12 @@ const OrderDashboard = () => {
                         rel="noopener noreferrer"
                       >
                         <img
+                          className="rounded"
                           src={order.prescription}
                           alt="Prescription"
                           style={{
                             width: "50px",
                             height: "50px",
-                            borderRadius: "50%",
                           }}
                         />
                       </a>
@@ -213,9 +213,8 @@ const OrderDashboard = () => {
         <button
           onClick={goToPreviousPage}
           disabled={currentPage === 1}
-          className={`mx-1 py-1 px-3 rounded ${
-            currentPage === 1 ? "bg-gray-200" : "bg-blue-500 text-white"
-          }`}
+          className={`mx-1 py-1 px-3 rounded ${currentPage === 1 ? "bg-gray-200" : "bg-blue-500 text-white"
+            }`}
         >
           Previous
         </button>
@@ -224,11 +223,10 @@ const OrderDashboard = () => {
           <button
             key={index}
             onClick={() => paginate(index + 1)}
-            className={`mx-1 py-1 px-3 rounded ${
-              currentPage === index + 1
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
-            }`}
+            className={`mx-1 py-1 px-3 rounded ${currentPage === index + 1
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200"
+              }`}
           >
             {index + 1}
           </button>
@@ -237,11 +235,10 @@ const OrderDashboard = () => {
         <button
           onClick={goToNextPage}
           disabled={currentPage === totalPages}
-          className={`mx-1 py-1 px-3 rounded ${
-            currentPage === totalPages
-              ? "bg-gray-200"
-              : "bg-blue-500 text-white"
-          }`}
+          className={`mx-1 py-1 px-3 rounded ${currentPage === totalPages
+            ? "bg-gray-200"
+            : "bg-blue-500 text-white"
+            }`}
         >
           Next
         </button>

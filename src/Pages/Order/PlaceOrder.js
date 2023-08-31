@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { clearCart } from "../../Components/Actions/Action"
 import PrimaryButton from "../../Components/PrimaryButton/PrimaryButton"
+import { toast } from "react-hot-toast"
 
-const PlaceOrder = ({ items, onHide }) => {
+const PlaceOrder = ({ items }) => {
   const cartItems = useSelector((state) => state.cartItems)
   const navigate = useNavigate()
   const firstName = localStorage.getItem("firstName")

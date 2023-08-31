@@ -36,9 +36,8 @@ const ProductDetails = () => {
       await axios
         .get(`http://localhost:5000/medisin`)
         .then(function (res) {
-          setLoading(false);
           setProducts(res?.data);
-
+          setLoading(false);
           console.log(res?.data);
         })
         .catch(function (error) {
